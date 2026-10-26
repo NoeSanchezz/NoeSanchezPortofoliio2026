@@ -4,7 +4,6 @@ import { STAR_PATH } from "./Sparkle";
 
 export type HalftoneShape = "sphere" | "star" | "flower" | "bolt" | "bang";
 
-const INK = "#141414";
 const N = 160; // resolution of the soft "ink density" mask each shape is sampled from
 
 // Shapes in a 100×100 box.
@@ -94,10 +93,12 @@ type Props = {
   crosshair?: boolean;
   /** Edge softness in mask pixels. */
   soft?: number;
+  /** Ink color. */
+  color?: string;
   className?: string;
 };
 
-/** A shape printed as halftone dots that "develop" in when mounted. */
+/** A shape printed as halftone dots that "develop" in the first time it scrolls into view. */
 export function Halftone({
   shape,
   cell = 8,
@@ -105,6 +106,7 @@ export function Halftone({
   square = false,
   crosshair = false,
   soft = 5,
+  color = "#141414",
   className,
 }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -126,7 +128,7 @@ export function Halftone({
       const g = cell * scale * dpr;
       const rowH = square ? g : g * 0.866;
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = INK;
+      ctx.fillStyle = color;
 
       for (let row = 0, y = g / 2; y < h; row++, y += rowH) {
         const shift = !square && row % 2 ? g / 2 : 0;
@@ -165,8 +167,9 @@ export function Halftone({
       draw();
     };
 
-    const start = performance.now();
+    let start = 0;
     const tick = (now: number) => {
+      start ||= now;
       progress = Math.min(1, (now - start) / 1100);
       draw();
       if (progress < 1) raf = requestAnimationFrame(tick);
@@ -175,12 +178,18 @@ export function Halftone({
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
-    if (!reduceMotion) raf = requestAnimationFrame(tick);
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      raf = requestAnimationFrame(tick);
+    });
+    if (!reduceMotion) io.observe(canvas);
     return () => {
       ro.disconnect();
+      io.disconnect();
       cancelAnimationFrame(raf);
     };
-  }, [shape, cell, baseSize, square, crosshair, soft, reduceMotion]);
+  }, [shape, cell, baseSize, square, crosshair, soft, color, reduceMotion]);
 
   return <canvas ref={ref} className={className} aria-hidden />;
 }

@@ -1,5 +1,5 @@
 import { useRef, type CSSProperties } from "react";
-import { education, profile, skills, socials } from "../content";
+import { currently, education, profile, skills, socials } from "../content";
 import { Window } from "./Window";
 
 export function About() {
@@ -13,6 +13,7 @@ export function About() {
           <span className="pixel big">me!</span>
         </h2>
         <p className="serif-name">{profile.name}</p>
+        <p className="role-pill">{profile.role}</p>
         <p className="bio">{profile.bio}</p>
 
         <h3 className="serif-label">Skills</h3>
@@ -74,6 +75,31 @@ export function About() {
               </a>
             </li>
           </ul>
+        </Window>
+
+        <Window title="currently.txt - Notepad" className="notepad-window" bounds={bounds} rotate={-1.5}>
+          <ul className="notepad-menu" aria-hidden>
+            {["File", "Edit", "Format", "View", "Help"].map((m) => (
+              <li key={m}>
+                <u>{m[0]}</u>
+                {m.slice(1)}
+              </li>
+            ))}
+          </ul>
+          <div className="notepad">
+            <dl>
+              {currently.items.map(({ label, value }) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="notepad-foot">
+              last updated: {currently.updated}
+              <span className="notepad-caret" aria-hidden />
+            </p>
+          </div>
         </Window>
       </div>
     </section>

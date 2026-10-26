@@ -1,6 +1,6 @@
 // Everything personal lives here — edit this file to update the site.
 import type { IconType } from "react-icons";
-import { FaAws } from "react-icons/fa";
+import { FaAws, FaGithub, FaLinkedin } from "react-icons/fa";
 import {
   SiTypescript,
   SiReact,
@@ -20,16 +20,17 @@ export const profile = {
   name: "Noe Sanchez",
   handle: "noe",
   role: "AI & Software Engineer",
-  bio: "Hi! I'm Noe, an AI & software engineer at PMG and a UT Arlington CS grad. Right now I'm helping architect an agentic influencer-campaign platform from the ground up. I like building full-stack things with TypeScript, Node and Go, and I love the little details that make an interface fun. Hablo español también.",
+  // Who you are and how you work. Facts like stack and focus live in `currently` below.
+  bio: "Hi! I'm Noe, an AI & software engineer at PMG and a cum laude CS grad from UT Arlington. I like owning things end to end, from the infrastructure to the last pixel, and I care about the small details that make software feel good to use.",
   // Drop a photo at public/me.jpg and set this to "/me.jpg". Leave empty for a placeholder.
   photo: "/me.jpg",
   email: "noesanchez00000@gmail.com",
-  resumeUrl: "", // e.g. "/resume.pdf" in public/
+  resumeUrl: "/Noe-Sanchez-Resume.pdf", // file lives in public/
 };
 
-export const socials: { label: string; handle: string; href: string }[] = [
-  { label: "GitHub", handle: "@NoeSanchezz", href: "https://github.com/NoeSanchezz" },
-  { label: "LinkedIn", handle: "in/noe-sanchez0", href: "https://www.linkedin.com/in/noe-sanchez0" },
+export const socials: { label: string; handle: string; href: string; icon: IconType }[] = [
+  { label: "GitHub", handle: "@NoeSanchezz", href: "https://github.com/NoeSanchezz", icon: FaGithub },
+  { label: "LinkedIn", handle: "in/noe-sanchez0", href: "https://www.linkedin.com/in/noe-sanchez0", icon: FaLinkedin },
 ];
 
 export const skills: { name: string; icon: IconType; color: string }[] = [
@@ -48,6 +49,18 @@ export const skills: { name: string; icon: IconType; color: string }[] = [
   { name: "Terraform", icon: SiTerraform, color: "#844fba" },
 ];
 
+// The currently.txt window — keep it short and update it whenever things change.
+export const currently = {
+  updated: "Oct 2026",
+  items: [
+    { label: "focus", value: "agentic engineering" },
+    { label: "building", value: "AI agents & full-stack apps" },
+    { label: "stack", value: "TypeScript · Node.js · Python · Terraform" },
+    { label: "mentoring", value: "4 engineers in an AI & SWE program" },
+    { label: "languages", value: "English · Español" },
+  ],
+};
+
 export const education: { years: string; school: string; detail: string }[] = [
   { years: "Dec 2025", school: "University of Texas at Arlington", detail: "B.S. Computer Science, Cum Laude" },
   { years: "2022 – 2023", school: "Tarrant County College", detail: "Associate of Arts · Associate of Science" },
@@ -59,7 +72,7 @@ export const experience: { years: string; title: string; org: string; highlights
     title: "AI & Software Engineer",
     org: "PMG",
     highlights: [
-      "Creator Engine: helping architect an agentic influencer campaign platform from the ground up on the open-source Pi agent framework, building agent-driven frontends across the full campaign lifecycle.",
+      "Helping architect an agentic platform from the ground up on the open-source Pi agent framework, building agent-driven frontends across the full product lifecycle.",
       "Alli Workflows: migrated 20+ UI components across 3 core screens to a new design system in a Go / TypeScript / Terraform microservice.",
       "Mentor 4 engineers in PMG's AI & Software Engineering program and speak on its panels and workshops.",
     ],
